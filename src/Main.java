@@ -1,40 +1,7 @@
 import java.util.*;
 
-// Класс Catalog (Каталог)
-class Catalog {
-    private List<Category> mainCategories;
-    private static int mainCategoryCount = 0; // счётчик для категорий
+import static java.lang.System.out;
 
-    public Catalog() {
-        this.mainCategories = new ArrayList<>();
-    }
-
-    // Метод для добавления основной категории
-    public void addMainCategory(Category category) {
-        mainCategories.add(category);
-        mainCategoryCount++;
-    }
-
-    // Метод для показа всех категорий
-    public void showAllCategories() {
-        System.out.println("\n=== ОСНОВНЫЕ КАТЕГОРИИ ===");
-        for (Category category : mainCategories) {
-            category.showCategory();
-            System.out.println("---");
-        }
-        System.out.println("Всего основных категорий: " + mainCategoryCount);
-    }
-
-    // Геттер для количества основных категорий
-    public int getMainCategoryCount() {
-        return mainCategoryCount;
-    }
-
-    // Геттер для списка основных категорий
-    public List<Category> getMainCategories() {
-        return new ArrayList<>(mainCategories);
-    }
-}
 
 public class Main {
     public static void main(String[] args) {
@@ -90,9 +57,13 @@ public class Main {
         Map<Category, Integer> categories = Product.getCategoryStatistics();
         for (Map.Entry<Category, Integer> entry : categories.entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " товаров");
-            // Key возвращает ключ записи. Нужен для работы с Map. Помогает в переборе
-            // Value работает с самими значениями в записи.
         }
+
+        // ВЫВОД ТОВАРОВ ПО КАТЕГОРИЯМ
+        System.out.println("\n=== ТОВАРЫ В КАТЕГОРИЯХ ===");
+        System.out.println(electronicSample.showInfo(productList));
+        System.out.println(gardenSample.showInfo(productList));
     }
 }
+
 

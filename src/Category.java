@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Класс Category (Категория)
+class Category {
+    private String name;
+    private List<Category> subcategories; // подкатегории
+
+
+    // Создания листа в категории
+    public Category(String name) {
+        this.name = name;
+        this.subcategories = new ArrayList<>();
+    }
+
+
+    // Получение имени
+    public String getName() {
+        return name;
+    }
+
+
+    // Подкатегории
+    public void addSubcategory(Category subcategory) {
+        subcategories.add(subcategory);
+    }
+    // взаимодействие подкатегории с листом
+    public List<Category> getSubcategories() {
+        return new ArrayList<>(subcategories);
+    }
+
+    // Показ чего наворатили
+    public void showCategory() {
+        System.out.println("Категория: " + name);
+        if (!subcategories.isEmpty()) // Если не пустой
+        {
+            // показ пока не закончатся
+            System.out.println("Подкатегории:");
+            for (Category sub : subcategories) {
+                System.out.println("  - " + sub.getName());
+            }
+        } else {
+            System.out.println("Подкатегорий нет");
+        }
+    }
+}

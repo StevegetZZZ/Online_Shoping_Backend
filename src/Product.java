@@ -2,49 +2,7 @@
 //// щелкните значок <icon src="AllIcons.Actions.Execute"/> в боковой области.
 import java.util.*;
 
-// Класс Category (Категория)
-class Category {
-    private String name;
-    private List<Category> subcategories; // подкатегории
 
-
-    // Создания листа в категории
-    public Category(String name) {
-        this.name = name;
-        this.subcategories = new ArrayList<>();
-    }
-
-
-    // Получение имени
-    public String getName() {
-        return name;
-    }
-
-
-    // Подкатегории
-    public void addSubcategory(Category subcategory) {
-        subcategories.add(subcategory);
-    }
-    // взаимодействие подкатегории с листом
-    public List<Category> getSubcategories() {
-        return new ArrayList<>(subcategories);
-    }
-
-    // Показ чего наворатили
-    public void showCategory() {
-        System.out.println("Категория: " + name);
-        if (!subcategories.isEmpty()) // Если не пустой
-        {
-            // показ пока не закончатся
-            System.out.println("Подкатегории:");
-            for (Category sub : subcategories) {
-                System.out.println("  - " + sub.getName());
-            }
-        } else {
-            System.out.println("Подкатегорий нет");
-        }
-    }
-}
 
 // Абстрактный класс Product
 abstract class Product {
@@ -90,6 +48,13 @@ abstract class Product {
     // Абстрактный метод для суммы стоимости товаров. Ниже по коду, дублирован в двух классах.
     public abstract double calculateTotalPrice(List<Product> products);
 
+
+
+    // Метод show info
+    public abstract String showInfo(List<Product> products);
+
+
+
     @Override
     // Показ
     public String toString() {
@@ -110,47 +75,11 @@ abstract class Product {
 
 }
 
-// Класс электроники, наследник Product
-class Electronic extends Product {
 
-    public Electronic(String title, double price) {
-        super(title, price, new Category("Electronics"));
-    }
 
-    @Override
-    // Расчёт стоимости товаров
-    public double calculateTotalPrice(List<Product> products) {
-        double total = 0;
-        for (Product product : products) {
-            if (product instanceof Electronic) // instanceof это оператор, который проверяет, является ли объект экземпляром класса
-            {
-                total += product.getPrice();
-            }
-        }
-        return total;
-    }
-}
 
-// Класс товаров для сада, наследник Product
-class Garden extends Product {
 
-    public Garden(String title, double price) {
-        super(title, price, new Category("Garden"));
-    }
 
-    @Override
-    // Расчёт стоимости товаров
-    public double calculateTotalPrice(List<Product> products) {
-        double total = 0;
-        for (Product product : products) {
-            if (product instanceof Garden) // instanceof это оператор, который проверяет, является ли объект экземпляром класса
-            {
-                total += product.getPrice();
-            }
-        }
-        return total;
-    }
-}
 
 
 
@@ -175,6 +104,19 @@ class Garden extends Product {
  Создать класс "каталог". В нём сделать основные категории (список базовых)
 
 В каталог добавить счётчик который показывает сколько есть в наличии главных категорий.
+
+
+№3
+Инкапсуляцией защищаем класс от наружного доступа.
+Класс продукт. В него добавить абстрактный метод "show info" и преобразовать в других классах.
+В классе электроники и других переопределить этот метод через @Override
+Создать несколько объектов и добавить их в список по категориям через метод добавления.
+Через метод "show info" теперь должен вызываться список.
+
+
+
+
+Сделать саб категории в отдельном файле
 
 */
 

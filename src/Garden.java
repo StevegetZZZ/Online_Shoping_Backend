@@ -1,0 +1,43 @@
+import java.util.List;
+
+// Класс товаров для сада, наследник Product
+class Garden extends Product {
+
+    public Garden(String title, double price) {
+        super(title, price, new Category("Garden"));
+    }
+
+    @Override
+    // Расчёт стоимости товаров
+    public double calculateTotalPrice(List<Product> products) {
+        double total = 0;
+        for (Product product : products) {
+            if (product instanceof Garden) // instanceof это оператор, который проверяет, является ли объект экземпляром класса
+            {
+                total += product.getPrice();
+            }
+        }
+        return total;
+    }
+
+    @Override
+    // Показ всех товаров
+    public String showInfo(List<Product> products) {
+        StringBuilder info = new StringBuilder("Товары для сада:\n");
+        boolean hasGardenItems = false;
+
+        for (Product product : products) {
+            if (product instanceof Garden) {
+                info.append("  - ").append(product.getTitle())
+                        .append(" (").append(product.getPrice()).append(" руб.)\n");
+                hasGardenItems = true;
+            }
+        }
+
+        if (!hasGardenItems) {
+            info.append("  Товары не найдены\n");
+        }
+        return info.toString();
+    }
+
+}
