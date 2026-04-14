@@ -1,5 +1,8 @@
+package Hashcode_and_toString;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 // Класс Category (Категория)
 class Category {

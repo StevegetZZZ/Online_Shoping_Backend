@@ -1,3 +1,6 @@
+package Hashcode_and_toString;
+import java.util.*;
+
 import java.util.List;
 
 // Класс электроники, наследник Product
@@ -7,18 +10,18 @@ class Electronic extends Product {
         super(title, price, new Category("Electronics"));
     }
 
+
     @Override
-    // Расчёт стоимости товаров
     public double calculateTotalPrice(List<Product> products) {
         double total = 0;
         for (Product product : products) {
-            if (product instanceof Electronic) // instanceof это оператор, который проверяет, является ли объект экземпляром класса
-            {
+            if (product instanceof Electronic) {
                 total += product.getPrice();
             }
         }
         return total;
     }
+
 
     @Override
     // Показ всех товаров
@@ -39,4 +42,6 @@ class Electronic extends Product {
         }
         return info.toString();
     }
+
+
 }

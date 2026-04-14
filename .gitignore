@@ -3,3 +3,4 @@
 target/
 *.log
 Trumbs,db
+Hashcode_and_toString/

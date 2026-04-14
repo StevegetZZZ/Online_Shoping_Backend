@@ -1,3 +1,6 @@
+package Hashcode_and_toString;
+import java.util.*;
+
 import java.util.List;
 
 // Класс товаров для сада, наследник Product
@@ -6,6 +9,7 @@ class Garden extends Product {
     public Garden(String title, double price) {
         super(title, price, new Category("Garden"));
     }
+
 
     @Override
     // Расчёт стоимости товаров

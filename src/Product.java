@@ -1,79 +1,120 @@
+package Hashcode_and_toString;
+import java.util.*;
+
 ////TIP Для <b>запуска</b> кода нажмите <shortcut actionId="Run"/> или
 //// щелкните значок <icon src="AllIcons.Actions.Execute"/> в боковой области.
 import java.util.*;
 
-
-
-// Абстрактный класс Product
-abstract class Product {
+abstract class Product implements Payable, Finansbl {
     private static int nextId = 1;
     private int id;
     private String title;
     private double price;
-    private Category category; // Шиза, но так можно и нужно.
+    private Category category;
 
-    // Map для учёта категорий. По условиям нужно через Map
+    // Добавленные поля для интерфейсов оплаты
+    private boolean paid;
+    private double paidAmount;
+
     private static Map<Category, List<Product>> categoryProducts = new HashMap<>();
 
     public Product(String title, double price, Category category) {
-        this.id = nextId++; // повышение id
+        this.id = nextId++;
         this.title = title;
         this.price = price;
         this.category = category;
+        this.paid = false;
+        this.paidAmount = 0;
 
-        // Добавляем продукт в соответствующую категорию
         if (!categoryProducts.containsKey(category)) {
             categoryProducts.put(category, new ArrayList<>());
         }
         categoryProducts.get(category).add(this);
     }
 
-    // Геты
-    public int getId() {
-        return id;
+    // Геттеры
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public double getPrice() { return price; }
+    public Category getCategory() { return category; }
+
+    // Реализация Payable
+    @Override
+    public void pay(double amount) {
+        if (amount > 0) {
+            paid = true;
+            paidAmount += amount;
+        }
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    // Абстрактный метод для суммы стоимости товаров. Ниже по коду, дублирован в двух классах.
-    public abstract double calculateTotalPrice(List<Product> products);
-
-
-
-    // Метод show info
-    public abstract String showInfo(List<Product> products);
-
-
 
     @Override
-    // Показ
+    public double getPay() {
+        return paidAmount;
+    }
+
+    // Реализация FinalSecb
+    @Override
+    public boolean isPaid() {
+        return paid;
+    }
+
+    @Override
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+    // Абстрактные методы
+    public abstract double calculateTotalPrice(List<Product> products);
+    public abstract String showInfo(List<Product> products);
+
+    @Override
     public String toString() {
         return "Product{id=" + id + ", title='" + title + "', price=" + price +
                 ", category='" + category.getName() + "'}";
     }
 
-    // Статический метод для получения статистики по категориям
+    // Переопределённые equals и hashCode (на основе id)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public static Map<Category, Integer> getCategoryStatistics() {
-        Map<Category, Integer> stats = new HashMap<>(); // stats хранит итоговую статистику.
+        Map<Category, Integer> stats = new HashMap<>();
         for (var entry : categoryProducts.entrySet()) {
-            Category category = entry.getKey(); // Key возвращает ключ записи. Нужен для работы с Map. Помогает в переборе
-            int productCount = entry.getValue().size(); // Value работает с самими значениями в записи.
-            stats.put(category, productCount);
+            stats.put(entry.getKey(), entry.getValue().size());
         }
         return stats;
     }
-
 }
+
+//    if (this.id = other.id && this.title == other.title) {
+//        Product
+//    }
+//    @Override
+//    public boolean equals(Object obj) {
+//
+//        if (this == obj) return true;
+//        if (obj == null) return false;
+//        if (!(obj instanceof Product)) return  false;
+//        if (this.id == nextId) return true;
+//        Product other = (Product) obj;
+//
+//
+//        //return this.id.equals(((Product) obj).id) && this.title == other.title;
+//        return false;
+//    };
+//
+
+
 
 
 
