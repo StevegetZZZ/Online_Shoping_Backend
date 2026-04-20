@@ -34,7 +34,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         // Создаём каталог
         Catalog catalog = new Catalog();
 
@@ -56,18 +55,17 @@ public class Main {
         List<Product> productList = new ArrayList<>();
 
         // Создаём 3 объекта электроники
-        productList.add(new Electronic("Telephone", 29999.99));
-        productList.add(new Electronic("Laptop", 79999.99));
-        productList.add(new Electronic("Headphones", 4999.99));
+        productList.add(new Electronic("Telephone", 29999.99, electronicsCat));
+        productList.add(new Electronic("Laptop", 79999.99, electronicsCat));
+        productList.add(new Electronic("Headphones", 4999.99, electronicsCat));
 
         // Создаём 3 объекта товаров для сада
-        productList.add(new Garden("Shovel", 1999.99));
-        productList.add(new Garden("Watering can", 2499.99));
-        productList.add(new Garden("Garden gloves", 899.99));
+        productList.add(new Garden("Shovel", 1999.99, gardenCat));
+        productList.add(new Garden("Watering can", 2499.99, gardenCat));
+        productList.add(new Garden("Garden gloves", 899.99, gardenCat));
 
-        // Товар дублекат
-        productList.add(new Electronic("Telephone", 16969.69));
-
+        // Товар‑дубликат
+        productList.add(new Electronic("Telephone", 16969.69, electronicsCat));
 
         // Выводим все объекты на экран
         System.out.println("=== ВСЕ ТОВАРЫ В КАТАЛОГЕ ===");
@@ -79,8 +77,9 @@ public class Main {
         catalog.showAllCategories();
 
         // Рассчитываем и выводим суммы по категориям
-        Electronic electronicSample = new Electronic("Sample", 0);
-        Garden gardenSample = new Garden("Sample", 0);
+        // Используем существующие категории из каталога
+        Electronic electronicSample = new Electronic("Sample", 0.0, electronicsCat);
+        Garden gardenSample = new Garden("Sample", 0.0, gardenCat);
 
         System.out.println("\n=== СУММЫ ПО КАТЕГОРИЯМ ===");
         System.out.printf("Электроника: %.2f руб.%n", electronicSample.calculateTotalPrice(productList));
@@ -98,10 +97,18 @@ public class Main {
         System.out.println(electronicSample.showInfo(productList));
         System.out.println(gardenSample.showInfo(productList));
 
-        // Вывод сгрупированные товаров по названию.
+        // Вывод сгруппированных товаров по названию
         System.out.println("\n=== ГРУППИРОВКА ТОВАРОВ ПО НАЗВАНИЮ ===");
         printProductGroups(productList);
+
+        // Сортировка и вывод товаров по цене
+        System.out.println("\n=== ОТСОРТИРОВАННЫЕ ТОВАРЫ ПО ЦЕНЕ ===");
+        Collections.sort(productList);
+        for (Product product : productList) {
+            System.out.println(product);
+        }
     }
+
 }
 
 

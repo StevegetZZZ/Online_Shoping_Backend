@@ -5,11 +5,9 @@ import java.util.List;
 
 // Класс электроники, наследник Product
 class Electronic extends Product {
-
-    public Electronic(String title, double price) {
-        super(title, price, new Category("Electronics"));
+    public Electronic(String title, double price, Category category) {
+        super(title, price, category);
     }
-
 
     @Override
     public double calculateTotalPrice(List<Product> products) {
@@ -22,9 +20,7 @@ class Electronic extends Product {
         return total;
     }
 
-
     @Override
-    // Показ всех товаров
     public String showInfo(List<Product> products) {
         StringBuilder info = new StringBuilder("Электроника:\n");
         boolean hasElectronics = false;
@@ -42,6 +38,4 @@ class Electronic extends Product {
         }
         return info.toString();
     }
-
-
 }

@@ -1,23 +1,19 @@
 package Hashcode_and_toString;
 import java.util.*;
-
 import java.util.List;
+
 
 // Класс товаров для сада, наследник Product
 class Garden extends Product {
-
-    public Garden(String title, double price) {
-        super(title, price, new Category("Garden"));
+    public Garden(String title, double price, Category category) {
+        super(title, price, category);
     }
 
-
     @Override
-    // Расчёт стоимости товаров
     public double calculateTotalPrice(List<Product> products) {
         double total = 0;
         for (Product product : products) {
-            if (product instanceof Garden) // instanceof это оператор, который проверяет, является ли объект экземпляром класса
-            {
+            if (product instanceof Garden) {
                 total += product.getPrice();
             }
         }
@@ -25,7 +21,6 @@ class Garden extends Product {
     }
 
     @Override
-    // Показ всех товаров
     public String showInfo(List<Product> products) {
         StringBuilder info = new StringBuilder("Товары для сада:\n");
         boolean hasGardenItems = false;
@@ -43,5 +38,4 @@ class Garden extends Product {
         }
         return info.toString();
     }
-
 }

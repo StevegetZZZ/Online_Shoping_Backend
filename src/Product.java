@@ -1,11 +1,13 @@
 package Hashcode_and_toString;
 import java.util.*;
-
+import java.util.Arrays;
+import java.util.Comparator;
 ////TIP Для <b>запуска</b> кода нажмите <shortcut actionId="Run"/> или
 //// щелкните значок <icon src="AllIcons.Actions.Execute"/> в боковой области.
 import java.util.*;
 
-abstract class Product implements Payable, Finansbl {
+
+abstract class Product implements Payable, Financial, Comparable<Product> {
     private static int nextId = 1;
     private int id;
     private String title;
@@ -52,7 +54,7 @@ abstract class Product implements Payable, Finansbl {
         return paidAmount;
     }
 
-    // Реализация FinalSecb
+    // Реализация Financial
     @Override
     public boolean isPaid() {
         return paid;
@@ -73,7 +75,6 @@ abstract class Product implements Payable, Finansbl {
                 ", category='" + category.getName() + "'}";
     }
 
-    // Переопределённые equals и hashCode (на основе id)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,7 +95,13 @@ abstract class Product implements Payable, Finansbl {
         }
         return stats;
     }
+
+    @Override
+    public int compareTo(Product other) {
+        return Double.compare(this.price, other.price);
+    }
 }
+
 
 //    if (this.id = other.id && this.title == other.title) {
 //        Product
