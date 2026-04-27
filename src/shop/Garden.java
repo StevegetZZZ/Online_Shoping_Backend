@@ -1,5 +1,4 @@
-package Hashcode_and_toString;
-import java.util.*;
+package shop;
 import java.util.List;
 
 

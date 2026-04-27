@@ -1,4 +1,4 @@
-package Hashcode_and_toString;
+package shop;
 
 public interface Payable {
     void pay(double amount);

@@ -1,11 +1,13 @@
 
-package Hashcode_and_toString;
+package shop;
 
 import java.util.*;
-import static java.lang.System.out;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
+
 
     // Метод для группировки товаров по названию
     public static Map<String, List<Product>> groupProductsByName(List<Product> products) {
@@ -33,9 +35,17 @@ public class Main {
         }
     }
 
+    // Метод для фильтрации товаров по заданному условию (добавлено)
+    public static List<Product> filterProducts(List<Product> products, ProductFilter filter) {
+        return products.stream()
+                .filter(filter::test)
+                .collect(Collectors.toList());
+    }
+
     public static void main(String[] args) {
         // Создаём каталог
         Catalog catalog = new Catalog();
+
 
         // Создаём основные категории
         Category electronicsCat = new Category("Электроника");
@@ -67,6 +77,12 @@ public class Main {
         // Товар‑дубликат
         productList.add(new Electronic("Telephone", 16969.69, electronicsCat));
 
+        // Устанавливаем статусы для некоторых товаров (для примера)
+        productList.get(0).setOrderStatus(OrderStatus.PAID);
+        productList.get(1).setOrderStatus(OrderStatus.SHIPPED);
+        productList.get(2).setOrderStatus(OrderStatus.DELIVERED);
+
+
         // Выводим все объекты на экран
         System.out.println("=== ВСЕ ТОВАРЫ В КАТАЛОГЕ ===");
         for (Product product : productList) {
@@ -77,7 +93,6 @@ public class Main {
         catalog.showAllCategories();
 
         // Рассчитываем и выводим суммы по категориям
-        // Используем существующие категории из каталога
         Electronic electronicSample = new Electronic("Sample", 0.0, electronicsCat);
         Garden gardenSample = new Garden("Sample", 0.0, gardenCat);
 
@@ -92,25 +107,74 @@ public class Main {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " товаров");
         }
 
-        // Выводим товары по категориям (с помощью showInfo)
+        // ВЫВОД ТОВАРОВ ПО КАТЕГОРИЯМ (основная часть вопроса)
         System.out.println("\n=== ТОВАРЫ В КАТЕГОРИЯХ ===");
-        System.out.println(electronicSample.showInfo(productList));
-        System.out.println(gardenSample.showInfo(productList));
 
-        // Вывод сгруппированных товаров по названию
+        // Создаём временные объекты для вызова showInfo()
+        Electronic electronicInfo = new Electronic("Sample", 0.0, electronicsCat);
+        Garden gardenInfo = new Garden("Sample", 0.0, gardenCat);
+
+        // Выводим список электроники
+        System.out.println(electronicInfo.showInfo(productList));
+
+        // Выводим список товаров для сада
+        System.out.println(gardenInfo.showInfo(productList));
+
+        // Остальные разделы (группировка, сортировка и т. д.)
         System.out.println("\n=== ГРУППИРОВКА ТОВАРОВ ПО НАЗВАНИЮ ===");
         printProductGroups(productList);
 
-        // Сортировка и вывод товаров по цене
         System.out.println("\n=== ОТСОРТИРОВАННЫЕ ТОВАРЫ ПО ЦЕНЕ ===");
         Collections.sort(productList);
         for (Product product : productList) {
             System.out.println(product);
         }
-    }
 
+
+        /// Лямбда часть
+
+
+        System.out.println("\n=== ФИЛЬТРАЦИЯ ТОВАРОВ ===");
+
+        // 1 Только доставленные товары
+        List<Product> deliveredProducts = filterProducts(productList, ProductFilters.deliveredOnly());
+        System.out.println("Доставленные товары:");
+        deliveredProducts.forEach(System.out::println);
+
+        // 2 Товары дешевле 5000 рублей
+        List<Product> cheapProducts = filterProducts(productList, ProductFilters.cheaperThan(5000.0));
+        System.out.println("\nТовары дешевле 5 000 руб.:");
+        cheapProducts.forEach(System.out::println);
+
+        // 3 Только электроника
+        List<Product> electronicsOnly = filterProducts(productList, ProductFilters.inCategory("Электроника"));
+        System.out.println("\nТолько электроника:");
+        electronicsOnly.forEach(System.out::println);
+
+        // 4 Электроника дороже 20000 рублей
+        List<Product> expensiveElectronics = filterProducts(productList, ProductFilters.expensiveElectronics(20000.0));
+        System.out.println("\nЭлектроника дороже 20 000 руб.:");
+        expensiveElectronics.forEach(System.out::println);
+
+        // 5 Фильтрация по статусу (PAID)
+        List<Product> paidProducts = filterProducts(productList, ProductFilters.withStatus(OrderStatus.PAID));
+        System.out.println("\nОплаченные товары:");
+        paidProducts.forEach(System.out::println);
+
+
+    }
 }
 
+
+
+
+//enum OrderStatus {
+//    NEW;
+//    PAID;
+//    SHIPPED;
+//    DELIVERED;
+//    CANCELLED;
+//}
 
 // интерфейс пеабл. Метод пэй. Гетпей в класе Пейабл. за оплату отвечает
 // интерфейс финансовл. Провереяет статус оплаты.
@@ -143,3 +207,11 @@ public class Main {
 // Создать класс пёрсон (возможно асбтрактный) и из него будет наследоваться класс "клиент" (у него свой id, mane, баланс и волид.)
 //
 //
+
+
+// этап 7.
+
+// Реализовать enum, Functional Interface и Lambda функцию. enum должен отображать статус заказа.
+// Functional Interface должен работать с клиентами или товарами.
+// С помощью Lambda функцию создать фильтр или улучшить сортировку.
+// Нужно чтобы лямбда функции были отдельно от мейна. Условно в новом классе для вывода сортировки.

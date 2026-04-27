@@ -1,4 +1,4 @@
-package Hashcode_and_toString;
+package shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,8 @@ import java.util.Objects;
 class Category {
     private String name;
     private List<Category> subcategories; // подкатегории
+
+
 
     // Создания листа в категории
     public Category(String name) {

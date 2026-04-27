@@ -1,4 +1,4 @@
-package Hashcode_and_toString;
+package shop;
 
 import java.util.ArrayList;
 import java.util.List;

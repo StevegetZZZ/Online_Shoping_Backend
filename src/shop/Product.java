@@ -1,10 +1,7 @@
-package Hashcode_and_toString;
+package shop;
 import java.util.*;
-import java.util.Arrays;
-import java.util.Comparator;
 ////TIP Для <b>запуска</b> кода нажмите <shortcut actionId="Run"/> или
 //// щелкните значок <icon src="AllIcons.Actions.Execute"/> в боковой области.
-import java.util.*;
 
 
 abstract class Product implements Payable, Financial, Comparable<Product> {
@@ -14,9 +11,12 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     private double price;
     private Category category;
 
-    // Добавленные поля для интерфейсов оплаты
+    // Поля для оплаты
     private boolean paid;
     private double paidAmount;
+
+    // Поле для статуса заказа
+    private OrderStatus orderStatus = OrderStatus.NEW;
 
     private static Map<Category, List<Product>> categoryProducts = new HashMap<>();
 
@@ -40,6 +40,10 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     public double getPrice() { return price; }
     public Category getCategory() { return category; }
 
+    // Для статуса заказа
+    public OrderStatus getOrderStatus() { return orderStatus; }
+    public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus; }
+
     // Реализация Payable
     @Override
     public void pay(double amount) {
@@ -50,20 +54,13 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     }
 
     @Override
-    public double getPay() {
-        return paidAmount;
-    }
+    public double getPay() { return paidAmount; }
 
     // Реализация Financial
     @Override
-    public boolean isPaid() {
-        return paid;
-    }
-
+    public boolean isPaid() { return paid; }
     @Override
-    public void setPaid(boolean paid) {
-        this.paid = paid;
-    }
+    public void setPaid(boolean paid) { this.paid = paid; }
 
     // Абстрактные методы
     public abstract double calculateTotalPrice(List<Product> products);
@@ -72,7 +69,7 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     @Override
     public String toString() {
         return "Product{id=" + id + ", title='" + title + "', price=" + price +
-                ", category='" + category.getName() + "'}";
+                ", category='" + category.getName() + "', status=" + orderStatus + "}";
     }
 
     @Override
@@ -84,9 +81,7 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    public int hashCode() { return Objects.hash(id); }
 
     public static Map<Category, Integer> getCategoryStatistics() {
         Map<Category, Integer> stats = new HashMap<>();
@@ -97,10 +92,9 @@ abstract class Product implements Payable, Financial, Comparable<Product> {
     }
 
     @Override
-    public int compareTo(Product other) {
-        return Double.compare(this.price, other.price);
-    }
+    public int compareTo(Product other) { return Double.compare(this.price, other.price); }
 }
+
 
 
 //    if (this.id = other.id && this.title == other.title) {
