@@ -31,38 +31,6 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-//    // Метод для группировки товаров по названию
-//    public static Map<String, List<Product>> groupProductsByName(List<Product> products) {
-//        Map<String, List<Product>> map = new HashMap<>();
-//        for (Product p : products) {
-//            String title = p.getTitle();
-//            // computeIfAbsent создаёт новый список, если ключа ещё нет
-//            map.computeIfAbsent(title, k -> new ArrayList<>()).add(p);
-//        }
-//        return map;
-//    }
-//
-//    // Метод для вывода всех групп (название один раз, затем список цен)
-//    public static void printProductGroups(List<Product> products) {
-//        Map<String, List<Product>> groups = groupProductsByName(products);
-//        for (Map.Entry<String, List<Product>> entry : groups.entrySet()) {
-//            String title = entry.getKey();
-//            List<Product> sameName = entry.getValue();
-//            System.out.print("Товар: " + title + " -> цены: ");
-//            for (int i = 0; i < sameName.size(); i++) {
-//                System.out.print(sameName.get(i).getPrice() + " руб");
-//                if (i < sameName.size() - 1) System.out.print(", ");
-//            }
-//            System.out.println();
-//        }
-//    }
-//
-//    // Метод для фильтрации товаров по заданному условию
-//    public static List<Product> filterProducts(List<Product> products, ProductFilter filter) {
-//        return products.stream()
-//                .filter(filter::test)
-//                .collect(Collectors.toList());
-//    }
 
     public static void main(String[] args) {
         // Создаём каталог
@@ -473,3 +441,21 @@ public class Main {
 // Нужно чтобы показывал успешно ил купил или нет, хватало ли денег или нет.
 // SOLID'у должен соответствовать
 // активно применять стим мап.
+//
+// По принципам не так. Из пёрсона вытащить методы оплаты в интерфейс.
+
+
+// этап 10.
+//
+// применить фактор Pattern для создания товаров, щитов, заказов и тд.
+//  Strategy Pattern нужен в способе оплаты.
+// Каталог не может быть дубликатом. Нужен будет объект ( Singleton ).
+//
+// Dependency Injection ( в SOLID и Pattern было ).
+// Когда класс принимает другой объект нужно делать, так чтобы класс напрямую не был зависим от другого класса.
+//
+// Добавить Immutable object. Как пример в ордере ( счёте ), Immutable касается.
+// Как пример 2 Payment result в объекте итогов платежей.
+//
+// Должны быть товары, каталог, счета, кредит, история операций.
+// Метод оплаты должен быть выделен в отдельный интерфейс, а не в Person
